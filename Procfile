@@ -1,1 +1,1 @@
-web: bin/start-pgbouncer-stunnel gunicorn VDshop.wsgi
+web:gunicorn VDshop.wsgi
