@@ -1,0 +1,11 @@
+#poject
+/venv
+.idea
+.DS_Store
+*.pyc
+
+# Text backup files
+*.bak
+
+#Database
+*.sqlite3
