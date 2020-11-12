@@ -1,4 +1,5 @@
 from django.contrib import messages
+from django.contrib.auth import update_session_auth_hash
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import  auth
@@ -24,9 +25,9 @@ def profile_register(request):
 
             messages.success(request, 'Регистрация прошла успешно!')
 
-            user = auth.authenticate(request,
-                                     username=user_form.cleaned_data.get('username'),
+            user = auth.authenticate(username=user_form.cleaned_data.get('username'),
                                      password=user_form.cleaned_data.get('password1'))
+
             auth.login(request, user)
 
             return redirect('profile_detail_url')
@@ -48,10 +49,9 @@ def profile_login(request):
         form = LoginUserForm(request.POST)
 
         if form.is_valid():
-            user = auth.authenticate(request,
-                                     username=form.cleaned_data.get('username'),
-                                     password=form.cleaned_data.get('password')
-                                     )
+            user = auth.authenticate(username=form.cleaned_data.get('username'),
+                                     password=form.cleaned_data.get('password'))
+
             auth.login(request, user)
             return redirect('profile_detail_url')
     else:
@@ -81,68 +81,50 @@ def profile_edit(request):
 
         if user_form.is_valid() and profile_form.is_valid():
 
-            login_password_after_edit = request.user.password
-            user_form.save()
+            # login_password_after_edit = request.user.password
+            user = user_form.save()
             profile_form.save()
 
-            messages.success(request, "Данные Профиля успешно изменены!")
-
-            user = auth.authenticate(request,
-                                     username=user_form.cleaned_data.get('username'),
-                                     password=login_password_after_edit
-                                     )
-            auth.login(request, user)
+            update_session_auth_hash(request, user)
+            messages.success(request, "Данные профиля успешно изменены!")
 
             return redirect('profile_detail_url')
     else:
         user_form = EditUserForm(instance=request.user)
-        profile_form = EditProfileForm(request.user.profile)
+        profile_form = EditProfileForm(instance=request.user.profile)
 
     context = {
         'user_form': user_form,
-        'profile-form': profile_form,
+        'profile_form': profile_form,
     }
 
     return render(request, 'account/profile_edit.html', context=context)
 
 
+@login_required
+def profile_change_password(request):
 
+    user = request.user
 
-# if request.method == "POST":
-#
-#     user_form = UpdateUserForm(request.POST, instance=request.user)
-#     profile_form = UpdateProfileForm( request.POST, request.FILES, instance=request.user.profile)
-#
-#     print(user_form.is_valid())
-#
-#     if user_form.is_valid() and profile_form.is_valid():
-#
-#
-#         password_for_login = request.user.password
-#         user_form.save()
-#         profile_form.save()
-#         messages.success(request, ('Your profile was successfully updated!'))
-#
-#         user = auth.authenticate(username=user_form.cleaned_data.get('username'),
-#                                  password=password_for_login,
-#                                  )
-#
-#         auth.login(request, user)
-#
-#         return redirect('accounts:profile_detail')
-#
-#     else:
-#         pass
-#         # messages.error(request, ('Please correct the error below.'))
-# else:
-#     user_form = UpdateUserForm(instance=request.user)
-#     profile_form = UpdateProfileForm(instance=request.user.profile)
-#
-# return render(request, 'accounts/profile_edit.html', {
-#     'user_form': user_form,
-#     'profile_form': profile_form
-# })
+    if request.method == 'POST':
+        form = ChangePasswordUserForm(data=request.POST, request=request)
+        if form.is_valid():
 
+            user.set_password(form.cleaned_data.get('password2'))
+            user.save()
+
+            update_session_auth_hash(request, user)
+            messages.success(request, "Данные профиля успешно изменены!")
+
+            return redirect('profile_detail_url')
+    else:
+        form = ChangePasswordUserForm(request=request)
+
+    context = {
+        'form': form
+    }
+
+    return render(request, 'account/profile_change_password.html', context=context)
 
 
 @login_required

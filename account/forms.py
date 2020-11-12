@@ -166,3 +166,45 @@ class EditProfileForm(forms.ModelForm):
     class Meta:
         model = Profile
         fields = ('photo', )
+
+
+class ChangePasswordUserForm(forms.ModelForm):
+
+    def __init__(self, *args, **kwargs):
+        self.request = kwargs.pop("request")
+        super(ChangePasswordUserForm, self).__init__(*args, **kwargs)
+
+    password0 = forms.CharField(
+        max_length=255,
+        widget=forms.TextInput(
+            attrs={'type': "password", 'name': "password0", 'class': "form-control input-sm",
+                   'placeholder': "Предыдущий пароль"}))
+
+    password1 = forms.CharField(
+        max_length=255,
+        widget=forms.TextInput(
+            attrs={'type': "password", 'name': "password1", 'class': "form-control input-sm",
+                   'placeholder': "Новый пароль"}))
+
+    password2 = forms.CharField(
+        max_length=255,
+        widget=forms.TextInput(
+            attrs={'type': "password", 'name': "password2", 'class': "form-control input-sm",
+                   'placeholder': "Подтверждите пароля"}))
+
+    class Meta:
+        model = User
+        fields = ('password0', 'password1', 'password2')
+
+    def clean(self):
+
+        cleaned_data = super().clean()
+        password0 = cleaned_data.get('password0')
+        password1 = cleaned_data.get('password1')
+        password2 = cleaned_data.get('password2')
+
+        if password0 and password1 and password2:
+            if password1 != password2:
+                raise forms.ValidationError("Новый пароль не прошел подтверждения!")
+            if not self.request.user.check_password(password0):
+                raise forms.ValidationError("Предыдущий пароль неверный!")
