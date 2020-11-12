@@ -1,5 +1,7 @@
 #poject
 /venv
+/mediafiles
+/staticfiles
 .idea
 .DS_Store
 *.pyc
