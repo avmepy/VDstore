@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'store.apps.StoreConfig',
+    'account.apps.AccountConfig',
 ]
 
 MIDDLEWARE = [
@@ -168,4 +169,3 @@ if not DEBUG:
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
-
