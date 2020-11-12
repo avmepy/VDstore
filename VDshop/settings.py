@@ -32,7 +32,7 @@ SECRET_KEY = os.environ.get('DJANGO_SECRET_KEY', '%7!xlzes_q--u33ezsly$qit%+=#0*
 
 
 # SECURITY WARNING: don't run with debug turned on in production!
-# DEBUG = True
+# DEBUG = False
 DEBUG = bool(os.environ.get('DJANGO_DEBUG', True))
 
 ALLOWED_HOSTS = [
@@ -133,14 +133,26 @@ USE_TZ = True
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/1.9/howto/static-files/
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-STATIC_URL = '/static/'
 
+# List of finder classes that know how to find static files in
+# various locations.
+
+STATICFILES_FINDERS = (
+    'django.contrib.staticfiles.finders.FileSystemFinder',
+    'django.contrib.staticfiles.finders.AppDirectoriesFinder',
+)
 
 # Extra places for collectstatic to find static files.
-STATICFILES_DIRS = (
+STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static'),
-)
+]
+
+
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_URL = '/static/'
+MEDIA_URL = '/media/'
+
+
 
 # CSRF_COOKIE_SECURE = True
 
