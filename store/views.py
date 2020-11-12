@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
-from .models import Product, SmartPhone, Sale
+from .models import SmartPhone, Sale, SmartWatch, Tablet, Computer, Audio, Laptop, Product
+import random
 
 
 def home(request):
@@ -9,10 +10,20 @@ def home(request):
     :param request: request
     :return: render home page
     """
+    # getting all sales
     sales = Sale.objects.all()
 
+    # getting all produce
+    produce = list(SmartPhone.objects.all()) + list(SmartWatch.objects.all()) + list(Tablet.objects.all()) + \
+               list(Computer.objects.all()) + list(Audio.objects.all()) + list(Laptop.objects.all())
+
+    random.shuffle(produce)  # shuffle produce
+
+    if len(produce) > 6:
+        produce = produce[:6]  # get 6 random products to represent on home page
+
     context = {
-        "smartphones": SmartPhone.objects.all(),
+        "produce": produce,
     }
 
     if sales:
@@ -24,7 +35,6 @@ def home(request):
 
 
 def product_detail(request, slug):
-
     product = get_object_or_404(Product, slug=slug)
 
     context = {
@@ -36,7 +46,6 @@ def product_detail(request, slug):
 
 
 def products_list(request):
-
     products = Product.objects.all()
 
     context = {
