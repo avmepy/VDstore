@@ -152,10 +152,7 @@ STATICFILES_DIRS = [
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
-
-
-
-# CSRF_COOKIE_SECURE = True
+MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
 
 
 # Heroku: Update database configuration from $DATABASE_URL.
