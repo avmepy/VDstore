@@ -1,9 +1,10 @@
 {% extends "../bases/base.html" %}
 
-{% block title %} Home | VDstore {% endblock %}
+{% block title %} Home  {% endblock %}
 
 {% block content %}
 
+{% load static %}
 
 <!-- Page Content -->
 <div class="container">
@@ -12,7 +13,8 @@
 
         <div class="col-lg-3">
 
-            <h1 class="my-4">VDshop</h1>
+            <h1 class="my-4">VD store</h1>
+{#            <img src="{% static 'media/logo_name.png' %}" alt="logo" height="120" width="200">#}
             <div class="list-group">
                 <a href="#" class="list-group-item">Smartphones</a>
                 <a href="#" class="list-group-item">Laptops</a>
@@ -57,7 +59,7 @@
 
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
-                        <a href="#"><img class="card-img-top" src="{{current.image.url}}" width="500" height="400" alt=""></a>
+                        <a href="#"><img class="card-img-top" src="{{current.image.url}}" width="250" height="200" alt=""></a>
                         <div class="card-body">
                             <h4 class="card-title">
                                 <a href="#">{{current.title}}</a>
