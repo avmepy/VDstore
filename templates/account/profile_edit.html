@@ -1,11 +1,10 @@
 {% extends 'bases/base.html' %}
 
 {% block title %}
-    Регистрация
+    Изменить профиль
 {% endblock %}
 
 {% block content %}
-
     <div class="container">
 
         <div class="row justify-content-center">
@@ -19,7 +18,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading">
                         <br>
-                        <h3 class="panel-title text-center mt-5 mb-4">Регистрация | VDstore</h3>
+                        <h3 class="panel-title text-center mt-5 mb-4">Изменение профиля | VDstore</h3>
                     </div>
 
                     <div class="mb-2">
@@ -31,7 +30,7 @@
                     </div>
 
                     <div class="panel-body">
-                        <form enctype="multipart/form-data" action="{% url 'profile_register_url' %}" method="post">
+                        <form enctype="multipart/form-data" action="{% url 'profile_edit_url' %}" method="post">
                             {% csrf_token %}
                             <div class="row">
                                 <div class="col-xs-6 col-sm-6 col-md-6">
@@ -53,33 +52,19 @@
                                 {{ user_form.email }}
                             </div>
 
-                            <div class="row">
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        {{ user_form.password1 }}
-                                    </div>
-                                </div>
-                                <div class="col-xs-6 col-sm-6 col-md-6">
-                                    <div class="form-group">
-                                        {{ user_form.password2 }}
-                                    </div>
-                                </div>
-
-                            </div>
-
                             <div class="text-center">
                                 <div class="form-group">
                                     <label class="text" style="">Выберите фото профиля</label>
                                     <div>{{ profile_form.photo }}</div>
                                 </div>
                             </div>
-                            <input type="submit" value="Зарегистрироваться и Войти" class="btn btn-info btn-block mt-5">
+                            <input type="submit" value="Сохранить и Войти" class="btn btn-info btn-block mt-5">
 
                         </form>
 
                         <div class="row justify-content-center mt-1">
                             <div class="text">
-                                Уже имеете аккаунт?
+                                Хотите изменить пароль?
 {#                                <a href="{% url '#' %}">#}
 {#                                    Войти!#}
 {#                                </a>#}
@@ -96,5 +81,4 @@
             </div>
         </div>
     </div>
-
 {% endblock %}
