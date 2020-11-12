@@ -3,10 +3,22 @@ from .models import Product, SmartPhone, Sale
 
 
 def home(request):
-    context = {"smartphones": SmartPhone.objects.all(),
-               }
-    #            "first_sale": Sale.objects.all()[0],
-    #            "sales": Sale.objects.all()[1:]}
+    """
+    home page
+    adding sales and random (most popular) produce fro each category
+    :param request: request
+    :return: render home page
+    """
+    sales = Sale.objects.all()
+
+    context = {
+        "smartphones": SmartPhone.objects.all(),
+    }
+
+    if sales:
+        context["first_sale"] = Sale.objects.all()[0]
+    if len(sales) > 1:
+        context["sales"] = Sale.objects.all()[1:]
 
     return render(request, "store/home.html", context=context)
 
