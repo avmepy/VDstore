@@ -20,8 +20,7 @@ import os
 BASE_DIR = Path(__file__).resolve().parent.parent
 # BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-# Activate Django-Heroku.
-# django_heroku.settings(locals())
+
 
 
 # Quick-start development settings - unsuitable for production
@@ -143,7 +142,7 @@ STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
 )
 
-CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True
 
 
 # Heroku: Update database configuration from $DATABASE_URL.
@@ -154,4 +153,7 @@ DATABASES['default'] = dj_database_url.config(conn_max_age=600, ssl_require=True
 # https://warehouse.python.org/project/whitenoise/
 if not DEBUG:
     STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
+
+# Activate Django-Heroku.
+django_heroku.settings(locals())
 
