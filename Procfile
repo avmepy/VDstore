@@ -1,1 +1,1 @@
-web:gunicorn VDshop.wsgi
+web: gunicorn VDshop.wsgi --log-file -
