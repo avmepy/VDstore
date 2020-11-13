@@ -16,51 +16,70 @@
 </head>
 <body>
 
-    <!--    header -->
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <p>LOGO</p>
-<!--        # TODO      <img src="VDshop/static_cdn/logo_mini.png" alt="">-->
-        <div class="collapse navbar-collapse">
-            <div class="collapse navbar-collapse justify-content-center">
-                <ul class="navbar-nav">
-                    <li class="nav-item active">
-                        <form class="form-inline">
-                            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-                            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                        </form>
-                    </li>
-                </ul>
-            </div>
-            <div class="collapse navbar-collapse justify-content-end">
-                <ul class="navbar-nav">
-
-
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Sign In</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="#">Cart</a>
-                    </li>
-
-
-                </ul>
-            </div>
+<!--    header -->
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <p>LOGO</p>
+    <!--        # TODO      <img src="VDshop/static_cdn/logo_mini.png" alt="">-->
+    <div class="collapse navbar-collapse">
+        <div class="collapse navbar-collapse justify-content-center">
+            <ul class="navbar-nav">
+                <li class="nav-item active">
+                    <form class="form-inline">
+                        <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                    </form>
+                </li>
+            </ul>
         </div>
-    </nav>
+        <div class="collapse navbar-collapse justify-content-end">
 
-    <!--    header-->
+            {% if user.is_authenticated %}
+                <text class="mr-2">Добро пожаловать, </text>
+                <li class="btn-group " >
+                    <button type="button" class="btn btn-secondary dropdown-toggle mr-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        {{user.username}}
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{% url 'profile_detail_url' %}">Профиль</a>
+                        <a class="dropdown-item" href="#">Корзина</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'profile_edit_url' %}">Изменить профиль</a>
+                        <a class="dropdown-item" href="{% url 'profile_change_password_url' %}">Изменить пароль</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="{% url 'profile_logout_url' %}">Выйти</a>
+                    </div>
+                </li>
+                <a class="btn btn-outline-secondary" href="{% url 'profile_logout_url' %}">Выйти</a>
+            {% else %}
+                <a class="btn btn-secondary mr-3" href="{% url 'profile_register_url' %}">Регистрация</a>
+                <a class="btn btn-outline-secondary" href="{% url 'profile_login_url' %}">Вход</a>
 
-    {% block content %} Content {% endblock %}
+            {% endif %}
+
+            <ul class="navbar-nav">
 
 
-   <!-- Footer -->
-    <footer class="py-5 bg-dark">
-        <div class="container">
-            <p class="m-0 text-center text-white">Copyright &copy; VDshop 2020</p>
+
+
+
+            </ul>
         </div>
-        <!-- /.container -->
-    </footer>
-    <!-- Footer -->
+    </div>
+</nav>
+
+<!--    header-->
+
+{% block content %} Content {% endblock %}
+
+
+<!-- Footer -->
+<footer class="py-5 bg-dark">
+    <div class="container">
+        <p class="m-0 text-center text-white">Copyright &copy; VDshop 2020</p>
+    </div>
+    <!-- /.container -->
+</footer>
+<!-- Footer -->
 
 
 </body>

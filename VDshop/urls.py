@@ -24,7 +24,7 @@ urlpatterns = [
     path("", redirect_to_store),
     path('admin/', admin.site.urls),
     path('store/', include('store.urls')),  # ref to store/urls.py
-    path('account/', include('account.urls')),
+    path('accounts/', include('account.urls')),
 ]
 
 urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
