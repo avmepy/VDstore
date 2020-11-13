@@ -1,26 +1,13 @@
-"""VDshop URL Configuration
+from django.urls import path
 
-The `urlpatterns` list routes URLs to views. For more information please see:
-    https://docs.djangoproject.com/en/3.1/topics/http/urls/
-Examples:
-Function views
-    1. Add an import:  from my_app import views
-    2. Add a URL to urlpatterns:  path('', views.home, name='home')
-Class-based views
-    1. Add an import:  from other_app.views import Home
-    2. Add a URL to urlpatterns:  path('', Home.as_view(), name='home')
-Including another URLconf
-    1. Import the include() function: from django.urls import include, path
-    2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
-"""
-from django.contrib import admin
-from django.urls import path, include
-from django.conf.urls.static import static
-from django.conf import settings
-
+from .views import *
 
 urlpatterns = [
+    path('profile/', profile_detail, name='profile_detail_url'),
+    path('register/', profile_register, name='profile_register_url'),
+    path('login/', profile_login, name='profile_login_url'),
+    path('logout/', profile_logout, name='profile_logout_url'),
+    path('edit/', profile_edit, name='profile_edit_url'),
+    path('change_password/', profile_change_password, name='profile_change_password_url'),
 
 ]
-
-

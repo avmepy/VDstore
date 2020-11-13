@@ -41,6 +41,7 @@ ALLOWED_HOSTS = [
 ]
 
 
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -153,9 +154,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'mediafiles')
-
-
-# CSRF_COOKIE_SECURE = True
 
 
 # Heroku: Update database configuration from $DATABASE_URL.

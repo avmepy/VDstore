@@ -11,3 +11,6 @@
 
 #Database
 *.sqlite3
+
+/mediafiles
+/staticfiles

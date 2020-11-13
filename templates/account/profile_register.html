@@ -1,0 +1,99 @@
+{% extends 'bases/base.html' %}
+
+{% block title %}
+    Регистрация
+{% endblock %}
+
+{% block content %}
+
+    <div class="container">
+
+        <div class="row justify-content-center">
+
+            <div class="col align-self-center">
+{#                {% for message in messages %}#}
+{#                    <div class="alert alert-success" role="alert">#}
+{#                        {{ message }}#}
+{#                    </div>#}
+{#                {% endfor %}#}
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <br>
+                        <h3 class="panel-title text-center mt-5 mb-4">Регистрация | VDstore</h3>
+                    </div>
+
+                    <div class="mb-2">
+                        {% for error in user_form.non_field_errors %}
+                            <small class="text-danger ml-3">
+                                {{ error }}
+                            </small>
+                        {% endfor %}
+                    </div>
+
+                    <div class="panel-body">
+                        <form enctype="multipart/form-data" action="{% url 'profile_register_url' %}" method="post">
+                            {% csrf_token %}
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        {{ user_form.first_name }}
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        {{ user_form.last_name }}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ user_form.username }}
+                            </div>
+
+                            <div class="form-group">
+                                {{ user_form.email }}
+                            </div>
+
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        {{ user_form.password1 }}
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        {{ user_form.password2 }}
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="text-center">
+                                <div class="form-group">
+                                    <label class="text" style="">Выберите фото профиля</label>
+                                    <div>{{ profile_form.photo }}</div>
+                                </div>
+                            </div>
+                            <input type="submit" value="Зарегистрироваться и Войти" class="btn btn-dark btn-block mt-5">
+
+                        </form>
+
+                        <div class="row justify-content-center mt-1">
+                            <div class="text">
+                                Уже имеете аккаунт?
+{#                                <a href="{% url '#' %}">#}
+{#                                    Войти!#}
+{#                                </a>#}
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                        <br>
+                        <br>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
