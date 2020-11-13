@@ -1,0 +1,43 @@
+{% extends 'bases/base.html' %}
+
+{% block title %}
+    Мой профиль
+{% endblock %}
+
+
+{% block content %}
+
+
+    <div class="row py-3 px-10">
+        <div class="col-md-11 mx-auto">
+
+            <!-- Profile widget -->
+            <div class="px-5 pt-0 pb-0 cover">
+                {% for message in messages %}
+                    <div class="alert alert-success" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <div class="media align-items-end profile-head">
+                    <div class="profile mr-3">
+                        {% if user.profile.photo %}
+                            <img src="{{ user.profile.photo.url }}" alt="..." width="250" class="rounded mb-2 img-thumbnail">
+                        {% endif %}
+
+                        <a href="{% url 'profile_edit_url' %}" class="btn btn-outline-dark btn-sm btn-block">Edit profile</a>
+                        <a href="{% url 'profile_change_password_url' %}" class="btn btn-outline-dark btn-sm btn-block">Change password</a>
+                        <a href="#" class="btn btn-outline-dark btn-sm btn-block">My Cart</a>
+
+                    </div>
+                    <div class="media-body mb-5 text-black">
+
+                        <h3 class="mt-0 mb-0">{{ user.get_full_name }}</h3>
+                        <p class="small mb-4"> <i class="fas fa-map-marker-alt mr-2"></i>{{ user.email }}</p>
+                    </div>
+                </div>
+            </div>
+            <!-- Profile widget end -->
+        </div>
+    </div>
+
+{% endblock %}

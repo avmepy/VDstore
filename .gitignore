@@ -1,5 +1,7 @@
 #poject
 /venv
+/mediafiles
+/staticfiles
 .idea
 .DS_Store
 *.pyc
@@ -9,3 +11,6 @@
 
 #Database
 *.sqlite3
+
+/mediafiles
+/staticfiles
