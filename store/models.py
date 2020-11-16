@@ -12,6 +12,7 @@ class Product(models.Model):
     description = models.TextField(max_length=5000, null=True, verbose_name="Описание")
     image = models.ImageField(verbose_name="Изображение")
     price = models.IntegerField(verbose_name="Цена")
+    brand = models.CharField(verbose_name="Бренд", max_length=150)
 
     def __str__(self):
         return self.title
