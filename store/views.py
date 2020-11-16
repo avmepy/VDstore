@@ -1,4 +1,4 @@
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render, get_object_or_404, HttpResponse
 from .models import SmartPhone, Sale, SmartWatch, Tablet, Computer, Audio, Laptop, Product
 import random
 
@@ -23,7 +23,7 @@ def home(request):
         produce = produce[:6]  # get 6 random products to represent on home page
 
     context = {
-        "produce": produce,
+        "produce": produce
     }
 
     if sales:
@@ -54,3 +54,21 @@ def products_list(request):
 
     # TODO: write template "store/templates/store/product_detail.html"
     return render(request, '', context=context)
+
+
+def show_category(request, product):
+
+    items = {
+        "smartphones": SmartPhone.objects.all(),
+        "smartwatches": SmartWatch.objects.all(),
+        "tablets": Tablet.objects.all(),
+        "computers": Computer.objects.all(),
+        "audios": Audio.objects.all(),
+        "laptops": Laptop.objects.all()
+    }
+
+    current = items[product]
+
+    context = {'current': current}
+    # return HttpResponse(f"{list(current)}")
+    return render(request, 'store/category.html', context=context)

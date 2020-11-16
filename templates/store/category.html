@@ -1,0 +1,71 @@
+{% extends "../bases/base.html" %}
+
+{% block title %} Home  {% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<!-- Page Content -->
+<div class="container">
+
+    <div class="row">
+
+        <div class="col-lg-3">
+
+            <h1 class="my-4">VD store</h1>
+{#            <img src="{% static 'media/logo_name.png' %}" alt="logo" height="120" width="200">#}
+            <div class="list-group">
+                <a href="{% url 'store:show_category' "smartphones" %}" class="list-group-item">Смартфоны</a>
+                <a href="{% url 'store:show_category' "laptops" %}" class="list-group-item">Ноутбуки</a>
+                <a href="{% url 'store:show_category' "computers" %}" class="list-group-item">Компьютеры</a>
+                <a href="{% url 'store:show_category' "smartwatches" %}" class="list-group-item">Смарт часы</a>
+                <a href="{% url 'store:show_category' "tablets" %}" class="list-group-item">Планшеты</a>
+                <a href="{% url 'store:show_category' "audios" %}" class="list-group-item">Аудио</a>
+            </div>
+
+        </div>
+
+        {#        #TODO filter#}
+        <!-- /.col-lg-3 -->
+
+        <div class="col-lg-9">
+
+
+            <div class="row">
+
+                {% for item in current %}
+
+                <div class="col-lg-4 col-md-6 mb-4">
+                    <div class="card h-100">
+                        <a href="#"><img class="card-img-top" src="{{item.image.url}}" width="250" height="200" alt=""></a>
+                        <div class="card-body">
+                            <h4 class="card-title">
+                                <a href="#">{{item.title}}</a>
+                            </h4>
+                            <p class="card-text">{{item.color}}</p>
+                        </div>
+                        <div class="card-footer">
+                            <small class="text-muted">₴ {{item.price}}</small>
+                            <!--                            #todo button: buy-->
+                        </div>
+                    </div>
+                </div>
+
+                {% endfor %}
+
+
+            </div>
+            <!-- /.row -->
+
+        </div>
+        <!-- /.col-lg-9 -->
+
+    </div>
+    <!-- /.row -->
+
+</div>
+<!-- /.container -->
+
+
+{% endblock %}
