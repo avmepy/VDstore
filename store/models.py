@@ -1,5 +1,6 @@
 from django.db import models
 from django.urls import reverse
+
 from .utils import generate_slug
 
 
@@ -18,7 +19,7 @@ class Product(models.Model):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('product_detail_url', kwargs={'slug': self.slug})
+        return reverse('product_detail', kwargs={'slug': self.slug})
 
     def save(self, *args, **kwargs):
         if not self.id:
