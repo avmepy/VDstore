@@ -70,8 +70,12 @@ def show_category(request, product):
         "laptops": Laptop
     }
 
+    brands = list(set([item.brand for item in items[product].objects.all()]))  # to be unique
+
     if request.method == "POST":
-        # return HttpResponse(f"{product}")
+
+        # --- price ---
+
         price_from = request.POST["from"]
         price_to = request.POST["to"]
 
@@ -85,10 +89,19 @@ def show_category(request, product):
         except Exception:
             price_to = MAX_PRICE
 
-        current = items[product].objects.filter(price__range=(price_from, price_to))
+        # --- price ---
+
+        # --- brand ---
+
+        chosen_brands = [brand for brand in brands if brand in request.POST]
+
+        # --- brand ---
+
+        current = items[product].objects.filter(price__range=(price_from, price_to), brand__in=chosen_brands)
+
 
     else:
         current = items[product].objects.all()
 
-    context = {'current': current, "name": product}
+    context = {'current': current, "name": product, "brands": brands}
     return render(request, 'store/category.html', context=context)
