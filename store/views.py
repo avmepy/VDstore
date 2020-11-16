@@ -57,30 +57,26 @@ def show_category(request, product):
         "laptops": Laptop
     }
 
+    price_from = list(items[product].objects.order_by("price"))[0].price
+    price_to = list(items[product].objects.order_by("price"))[-1].price
+    chosen_brands = []
     brands = list(set([item.brand for item in items[product].objects.all()]))  # to be unique
 
     if request.method == "POST":
 
         # --- price ---
-
-        price_from = request.POST["from"]
-        price_to = request.POST["to"]
-
+        try:
+            price_from = int(request.POST["from"])
+        except Exception:
+            pass
 
         try:
-            price_from = int(price_from)
+            price_to = int(request.POST["to"])
         except Exception:
-            price_from = 0
-
-        try:
-            price_to = int(price_to)
-        except Exception:
-            price_to = MAX_PRICE
-
+            pass
         # --- price ---
 
         # --- brand ---
-
         chosen_brands = [brand for brand in brands if brand in request.POST]
 
         if not chosen_brands:
@@ -93,6 +89,12 @@ def show_category(request, product):
     else:
         current = items[product].objects.all()
 
-    context = {'current': current, "name": product, "brands": brands}
+    context = {'current': current,
+               "name": product,
+               "brands": brands,
+               "chosen_brands": chosen_brands,
+               "price_from": price_from,
+               "price_to": price_to
+    }
 
     return render(request, 'store/category.html', context=context)

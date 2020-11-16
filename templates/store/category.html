@@ -44,12 +44,27 @@
 
                         {% for brand in brands%}
 
-                        <div class="form-check">
-                            <input class="form-check-input" type="checkbox" value="" name="{{ brand }}">
-                            <label class="form-check-label" for="defaultCheck1">
-                                {{ brand }}
-                            </label>
-                        </div>
+                            {% if brand in chosen_brands %}
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" checked value="" name="{{ brand }}">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        {{ brand }}
+                                    </label>
+                                </div>
+
+                            {% else %}
+
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" value="" name="{{ brand }}">
+                                    <label class="form-check-label" for="defaultCheck1">
+                                        {{ brand }}
+                                    </label>
+                                </div>
+
+                            {% endif %}
+
+
 
                         {% endfor %}
                     </li>
@@ -60,12 +75,12 @@
                         <h5>Цена</h5>
                         <div class="d-flex align-items-center mt-4 pb-1">
                             <div class="md-form md-outline my-0">
-                                <input name="from" type="text" class="form-control mb-0">
+                                <input name="from" type="text" class="form-control mb-0" value="{{ price_from }}">
                                 <label for="form">Мин</label>
                             </div>
                             <p class="px-4 mb-0 text-muted"> - </p>
                             <div class="md-form md-outline my-0">
-                                <input name="to" type="text" class="form-control mb-0">
+                                <input name="to" type="text" class="form-control mb-0" value="{{ price_to }}">
                                 <label for="to">Макс</label>
                             </div>
                         </div>
