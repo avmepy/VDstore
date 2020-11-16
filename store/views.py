@@ -71,4 +71,5 @@ def show_category(request, product):
 
     context = {'current': current}
     # return HttpResponse(f"{list(current)}")
+    #kdslkj
     return render(request, 'store/category.html', context=context)
