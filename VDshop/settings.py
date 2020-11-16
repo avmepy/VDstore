@@ -49,9 +49,11 @@ INSTALLED_APPS = [
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
+    'cloudinary_storage',
     'django.contrib.staticfiles',
     'store.apps.StoreConfig',
     'account.apps.AccountConfig',
+    'cloudinary',
 ]
 
 MIDDLEWARE = [
@@ -169,3 +171,11 @@ if not DEBUG:
 
 # Activate Django-Heroku.
 django_heroku.settings(locals())
+
+CLOUDINARY_STORAGE = {
+    'CLOUD_NAME': 'hniygejzx',
+    'API_KEY': '591748425823376',
+    'API_SECRET': 'iKqfrAU-X048BXcexSytdmkh5cg',
+}
+
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
