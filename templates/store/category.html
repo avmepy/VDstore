@@ -38,10 +38,10 @@
 
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
-                        <a href="#"><img class="card-img-top" src="{{item.image.url}}" width="250" height="200" alt=""></a>
+                        <a href="{% url 'store:product_detail_url' item.slug %}"><img class="card-img-top" src="{{item.image.url}}" width="250" height="200" alt=""></a>
                         <div class="card-body">
                             <h4 class="card-title">
-                                <a href="#">{{item.title}}</a>
+                                <a href="{% url 'store:product_detail_url' item.slug %}">{{item.title}}</a>
                             </h4>
                             <p class="card-text">{{item.color}}</p>
                         </div>
