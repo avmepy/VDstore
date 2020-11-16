@@ -15,7 +15,7 @@ def home(request):
 
     # getting all produce
     produce = list(SmartPhone.objects.all()) + list(SmartWatch.objects.all()) + list(Tablet.objects.all()) + \
-               list(Computer.objects.all()) + list(Audio.objects.all()) + list(Laptop.objects.all())
+              list(Computer.objects.all()) + list(Audio.objects.all()) + list(Laptop.objects.all())
 
     random.shuffle(produce)  # shuffle produce
 
@@ -41,23 +41,10 @@ def product_detail(request, slug):
         'product': product,
     }
 
-    # TODO: write template "store/templates/store/product_detail.html"
     return render(request, 'store/product_detail.html', context=context)
 
 
-def products_list(request):
-    products = Product.objects.all()
-
-    context = {
-        'products': products
-    }
-
-    # TODO: write template "store/templates/store/product_detail.html"
-    return render(request, '', context=context)
-
-
 def show_category(request, product):
-
     items = {
         "smartphones": SmartPhone,
         "smartwatches": SmartWatch,
@@ -70,4 +57,5 @@ def show_category(request, product):
     current = items[product].objects.all()
 
     context = {'current': current}
+
     return render(request, 'store/category.html', context=context)
