@@ -3,6 +3,9 @@ from .models import SmartPhone, Sale, SmartWatch, Tablet, Computer, Audio, Lapto
 import random
 
 
+MAX_PRICE = 1e10
+
+
 def home(request):
     """
     home page
@@ -67,7 +70,25 @@ def show_category(request, product):
         "laptops": Laptop
     }
 
-    current = items[product].objects.all()
+    if request.method == "POST":
+        # return HttpResponse(f"{product}")
+        price_from = request.POST["from"]
+        price_to = request.POST["to"]
+
+        try:
+            price_from = int(price_from)
+        except Exception:
+            price_from = 0
+
+        try:
+            price_to = int(price_to)
+        except Exception:
+            price_to = MAX_PRICE
+
+        current = items[product].objects.filter(price__range=(price_from, price_to))
+
+    else:
+        current = items[product].objects.all()
 
     context = {'current': current, "name": product}
     return render(request, 'store/category.html', context=context)

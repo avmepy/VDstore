@@ -28,9 +28,67 @@
                 <a href="{% url 'store:show_category' "audios" %}" class="list-group-item">Аудио</a>
             </div>
 
+
+{#            filters#}
+
+
+            <h1 class="my-4">Фильтр</h1>
+            {#            <img src="{% static 'media/logo_name.png' %}" alt="logo" height="120" width="200">#}
+            <ul class="list-group" >
+                <form method="post" action="{% url 'store:show_category' name %}">
+                    {% csrf_token %}
+                    <li class="list-group-item">
+                        <h5>Бренд</h5>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" name="">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Apple
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Xiaomi
+                            </label>
+                        </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+                            <label class="form-check-label" for="defaultCheck1">
+                                Samsung
+                            </label>
+                        </div>
+                    </li>
+                    <li class="list-group-item">
+                        <h5>Цена</h5>
+                        <div class="d-flex align-items-center mt-4 pb-1">
+                            <div class="md-form md-outline my-0">
+                                <input name="from" type="text" class="form-control mb-0">
+                                <label for="form">Мин</label>
+                            </div>
+                            <p class="px-4 mb-0 text-muted"> - </p>
+                            <div class="md-form md-outline my-0">
+                                <input name="to" type="text" class="form-control mb-0">
+                                <label for="to">Макс</label>
+                            </div>
+                        </div>
+                    </li>
+                    <li>
+                        <input type="submit" value="Применить" class="btn btn-dark btn-block mt-1">
+                    </li>
+                </form>
+            </ul>
+            <br>
+
+            {#                filters#}
+
+
         </div>
 
-        {#        #TODO filter#}
+
+
+
+
+
         <!-- /.col-lg-3 -->
 
         <div class="col-lg-9 mt-4">
@@ -45,25 +103,33 @@
 
             <div class="row">
 
-                {% for item in current %}
+                {% if current %}
 
-                <div class="col-lg-4 col-md-6 mb-4">
-                    <div class="card h-100">
-                        <a href="#"><img class="card-img-top" src="{{item.image.url}}" width="250" height="200" alt=""></a>
-                        <div class="card-body">
-                            <h4 class="card-title">
-                                <a href="#">{{item.title}}</a>
-                            </h4>
-                            <p class="card-text">{{item.color}}</p>
-                        </div>
-                        <div class="card-footer">
-                            <small class="text-muted">₴ {{item.price}}</small>
-                            <!--                            #todo button: buy-->
+                    {% for item in current %}
+
+                    <div class="col-lg-4 col-md-6 mb-4">
+                        <div class="card h-100">
+                            <a href="#"><img class="card-img-top" src="{{item.image.url}}" width="250" height="200" alt=""></a>
+                            <div class="card-body">
+                                <h4 class="card-title">
+                                    <a href="#">{{item.title}}</a>
+                                </h4>
+                                <p class="card-text">{{item.color}}</p>
+                            </div>
+                            <div class="card-footer">
+                                <small class="text-muted">₴ {{item.price}}</small>
+                                <!--                            #todo button: buy-->
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                {% endfor %}
+                    {% endfor %}
+
+                {% else %}
+
+                    <p>По заданным параметрам результатов нет :( </p>
+
+                {% endif %}
 
 
             </div>
