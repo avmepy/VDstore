@@ -3,7 +3,7 @@ from .models import SmartPhone, Sale, SmartWatch, Tablet, Computer, Audio, Lapto
 import random
 
 
-MAX_PRICE = 1e10
+MAX_PRICE = 1e7
 
 
 def home(request):
@@ -66,6 +66,7 @@ def show_category(request, product):
         price_from = request.POST["from"]
         price_to = request.POST["to"]
 
+
         try:
             price_from = int(price_from)
         except Exception:
@@ -82,9 +83,12 @@ def show_category(request, product):
 
         chosen_brands = [brand for brand in brands if brand in request.POST]
 
+        if not chosen_brands:
+            chosen_brands = brands
+
         # --- brand ---
 
-        current = items[product].objects.filter(price__range=(price_from, price_to), brand__in=chosen_brands)
+        current = items[product].objects.filter(price__range=[price_from, price_to], brand__in=chosen_brands)
 
     else:
         current = items[product].objects.all()
