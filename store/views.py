@@ -69,5 +69,5 @@ def show_category(request, product):
 
     current = items[product].objects.all()
 
-    context = {'current': current}
+    context = {'current': current, "name": product}
     return render(request, 'store/category.html', context=context)

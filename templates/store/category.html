@@ -9,7 +9,11 @@
 <!-- Page Content -->
 <div class="container">
 
+
+
+
     <div class="row">
+
 
         <div class="col-lg-3">
 
@@ -29,7 +33,14 @@
         {#        #TODO filter#}
         <!-- /.col-lg-3 -->
 
-        <div class="col-lg-9">
+        <div class="col-lg-9 mt-4">
+
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{% url 'store:home' %}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">{{name}}</li>
+                </ol>
+            </nav>
 
 
             <div class="row">
