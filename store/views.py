@@ -59,17 +59,15 @@ def products_list(request):
 def show_category(request, product):
 
     items = {
-        "smartphones": SmartPhone.objects.all(),
-        "smartwatches": SmartWatch.objects.all(),
-        "tablets": Tablet.objects.all(),
-        "computers": Computer.objects.all(),
-        "audios": Audio.objects.all(),
-        "laptops": Laptop.objects.all()
+        "smartphones": SmartPhone,
+        "smartwatches": SmartWatch,
+        "tablets": Tablet,
+        "computers": Computer,
+        "audios": Audio,
+        "laptops": Laptop
     }
 
-    current = items[product]
+    current = items[product].objects.all()
 
     context = {'current': current}
-    # return HttpResponse(f"{list(current)}")
-    #kdslkj
     return render(request, 'store/category.html', context=context)
