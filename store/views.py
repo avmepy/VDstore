@@ -57,6 +57,8 @@ def show_category(request, product):
         "laptops": Laptop
     }
 
+    # todo empty check
+
     price_from = list(items[product].objects.order_by("price"))[0].price
     price_to = list(items[product].objects.order_by("price"))[-1].price
     chosen_brands = []
