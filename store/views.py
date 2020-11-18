@@ -57,12 +57,19 @@ def show_category(request, product):
         "laptops": Laptop
     }
 
-    # todo empty check
 
-    price_from = list(items[product].objects.order_by("price"))[0].price
-    price_to = list(items[product].objects.order_by("price"))[-1].price
+    try:
+        price_from = list(items[product].objects.order_by("price"))[0].price
+    except Exception:
+        price_from = 0
+
+    try:
+        price_to = list(items[product].objects.order_by("price"))[-1].price
+    except Exception:
+        price_to = 1e7
+
     chosen_brands = []
-    brands = list(set([item.brand for item in items[product].objects.all()]))  # to be unique
+    brands = sorted(list(set([item.brand for item in items[product].objects.all()])))  # to be unique
 
     if request.method == "POST":
 
