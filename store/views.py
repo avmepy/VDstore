@@ -1,4 +1,5 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.views.generic import View
 from .models import SmartPhone, Sale, SmartWatch, Tablet, Computer, Audio, Laptop, Product
 import random
 
@@ -47,32 +48,48 @@ def product_detail(request, slug):
     return render(request, 'store/product_detail.html', context=context)
 
 
-def show_category(request, product):
-    items = {
-        "smartphones": SmartPhone,
-        "smartwatches": SmartWatch,
-        "tablets": Tablet,
-        "computers": Computer,
-        "audios": Audio,
-        "laptops": Laptop
-    }
+class ShowCategory(View):
 
+    def _prep(self, product):
+        items = {
+            "smartphones": SmartPhone,
+            "smartwatches": SmartWatch,
+            "tablets": Tablet,
+            "computers": Computer,
+            "audios": Audio,
+            "laptops": Laptop
+        }
 
-    try:
-        price_from = list(items[product].objects.order_by("price"))[0].price
-    except Exception:
-        price_from = 0
+        try:
+            price_from = list(items[product].objects.order_by("price"))[0].price
+        except Exception:
+            price_from = 0
 
-    try:
-        price_to = list(items[product].objects.order_by("price"))[-1].price
-    except Exception:
-        price_to = 1e7
+        try:
+            price_to = list(items[product].objects.order_by("price"))[-1].price
+        except Exception:
+            price_to = 1e7
+        chosen_brands = []
+        brands = sorted(list(set([item.brand for item in items[product].objects.all()])))  # to be unique
 
-    chosen_brands = []
-    brands = sorted(list(set([item.brand for item in items[product].objects.all()])))  # to be unique
+        return items, price_from, price_to, chosen_brands, brands
 
-    if request.method == "POST":
+    def get(self, request, product):
+        items, price_from, price_to, chosen_brands, brands = ShowCategory._prep(self, product)
 
+        current = items[product].objects.all()
+        context = {'current': current,
+                   "name": product,
+                   "brands": brands,
+                   "chosen_brands": chosen_brands,
+                   "price_from": price_from,
+                   "price_to": price_to
+                   }
+        return render(request, 'store/category.html', context=context)
+
+    def post(self, request, product):
+
+        items, price_from, price_to, chosen_brands, brands = ShowCategory._prep(self, product)
         # --- price ---
         try:
             price_from = int(request.POST["from"])
@@ -94,16 +111,12 @@ def show_category(request, product):
         # --- brand ---
 
         current = items[product].objects.filter(price__range=[price_from, price_to], brand__in=chosen_brands)
+        context = {'current': current,
+                   "name": product,
+                   "brands": brands,
+                   "chosen_brands": chosen_brands,
+                   "price_from": price_from,
+                   "price_to": price_to
+                   }
+        return render(request, 'store/category.html', context=context)
 
-    else:
-        current = items[product].objects.all()
-
-    context = {'current': current,
-               "name": product,
-               "brands": brands,
-               "chosen_brands": chosen_brands,
-               "price_from": price_from,
-               "price_to": price_to
-    }
-
-    return render(request, 'store/category.html', context=context)
