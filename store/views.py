@@ -1,6 +1,6 @@
-from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from django.views.generic import View
-from .models import SmartPhone, Sale, SmartWatch, Tablet, Computer, Audio, Laptop, Product
+from .models import SmartPhone, Sale, SmartWatch, Tablet, Computer, Audio, Laptop, Product, Cart, User
 import random
 
 
@@ -120,3 +120,13 @@ class ShowCategory(View):
                    }
         return render(request, 'store/category.html', context=context)
 
+
+def add_to_cart(request, slug, product_id):
+    if request.method == "POST":
+        print("added")
+        item = Product.objects.get(id=product_id)
+        print(item)
+
+        return product_detail(request, slug)
+
+    return HttpResponse("something went wrong :(")
