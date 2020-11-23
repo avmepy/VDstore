@@ -151,8 +151,18 @@ def my_cart(request):
         cur_cart = Cart(user=Profile.objects.get(user=user))
         cur_cart.save()
 
+    if request.method == "POST":
+        if "clear" in request.POST:
+            cur_cart.products.clear()
+
+        if "buy" in request.POST:
+
+            return render(request, 'store/pay.html',
+                          context={"price": sum([product.price for product in cur_cart.products.all()])})
+
     context = {
-        "current": list(cur_cart.products.all())
+        "current": list(cur_cart.products.all()),
+        "summary_price": sum([product.price for product in cur_cart.products.all()])
     }
 
     return render(request, 'store/cart.html', context=context)
