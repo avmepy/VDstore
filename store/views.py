@@ -1,7 +1,9 @@
-from django.shortcuts import render, get_object_or_404, HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from django.views.generic import View
-from .models import SmartPhone, Sale, SmartWatch, Tablet, Computer, Audio, Laptop, Product
+from .models import SmartPhone, Sale, SmartWatch, Tablet, Computer, Audio, Laptop, Product, Cart, User, Profile
 import random
+
 
 
 MAX_PRICE = 1e7
@@ -120,3 +122,37 @@ class ShowCategory(View):
                    }
         return render(request, 'store/category.html', context=context)
 
+
+@login_required
+def add_to_cart(request, slug):
+    if request.method == "POST":
+        user = request.user
+
+        item = get_object_or_404(Product, slug=slug)
+        try:
+            cur_cart = Cart.objects.get(user=Profile.objects.get(user=user))
+        except:
+            cur_cart = Cart(user=Profile.objects.get(user=user))
+            cur_cart.save()
+        cur_cart.products.add(item)
+        return product_detail(request, slug)
+
+    return HttpResponse("something went wrong :(")
+
+
+@login_required
+def my_cart(request):
+
+    user = request.user
+    cur_cart = None
+    try:
+        cur_cart = Cart.objects.get(user=Profile.objects.get(user=user))
+    except:
+        cur_cart = Cart(user=Profile.objects.get(user=user))
+        cur_cart.save()
+
+    context = {
+        "current": list(cur_cart.products.all())
+    }
+
+    return render(request, 'store/cart.html', context=context)

@@ -1,7 +1,10 @@
 from django.db import models
 from django.urls import reverse
-
 from .utils import generate_slug
+
+import sys
+sys.path.append("..")
+from account.models import Profile, User
 
 
 class Product(models.Model):
@@ -158,3 +161,8 @@ class Sale(models.Model):
     title = models.CharField(max_length=150, verbose_name="Название")
     image = models.ImageField(verbose_name="Баннер")  # 900x350
 
+
+class Cart(models.Model):
+
+    user = models.ForeignKey(Profile, on_delete=models.CASCADE)
+    products = models.ManyToManyField(Product)
