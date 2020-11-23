@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, HttpResponse
 from django.views.generic import View
+
 from .models import SmartPhone, Sale, SmartWatch, Tablet, Computer, Audio, Laptop, Product
 import random
 
@@ -40,10 +41,9 @@ def home(request):
 
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
-    print(product.get_cha)
     context = {
         'product': product,
-        'product_model': product.__class__._meta.model_name
+        # 'product_model': product_category
     }
 
     return render(request, 'store/product_detail.html', context=context)
