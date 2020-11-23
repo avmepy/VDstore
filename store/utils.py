@@ -1,10 +1,10 @@
 from time import time
 
 from django.utils.text import slugify
+from . import models
 
 
 def transliterate(title):
-
     """
     Transliteration of Cyrillic characters into Latin characters
     to generate a human-readable link
@@ -30,7 +30,6 @@ def transliterate(title):
 
 
 def generate_slug(title):
-
     """
     Generates slug Latin generated
     """

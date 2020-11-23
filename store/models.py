@@ -62,6 +62,7 @@ class SmartPhone(Product):
     system = models.CharField(verbose_name="Платформа", max_length=50)
 
     def get_characteristics(self):
+
         """
         returned all characteristics of the object
         :return: dict

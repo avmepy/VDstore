@@ -5,7 +5,6 @@ from .models import SmartPhone, Sale, SmartWatch, Tablet, Computer, Audio, Lapto
 import random
 
 
-
 MAX_PRICE = 1e7
 
 
@@ -42,9 +41,9 @@ def home(request):
 
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
-
     context = {
         'product': product,
+        # 'product_model': product_category
     }
 
     return render(request, 'store/product_detail.html', context=context)
