@@ -20,12 +20,40 @@
             <h1 class="my-4">VD store</h1>
 {#            <img src="{% static 'media/logo_name.png' %}" alt="logo" height="120" width="200">#}
             <div class="list-group">
-                <a href="{% url 'store:show_category' "smartphones" %}" class="list-group-item">Смартфоны</a>
-                <a href="{% url 'store:show_category' "laptops" %}" class="list-group-item">Ноутбуки</a>
-                <a href="{% url 'store:show_category' "computers" %}" class="list-group-item">Компьютеры</a>
-                <a href="{% url 'store:show_category' "smartwatches" %}" class="list-group-item">Смарт часы</a>
-                <a href="{% url 'store:show_category' "tablets" %}" class="list-group-item">Планшеты</a>
-                <a href="{% url 'store:show_category' "audios" %}" class="list-group-item">Аудио</a>
+                <form method="post" action="{% url 'store:my_cart' %}">
+
+                    {% csrf_token %}
+
+                    <ul>
+                        <li class="list-group-item">
+                            <h4>Оформить заказ</h4>
+                        </li>
+                        <li class="list-group-item">
+                            <h6>Способ доставки</h6>
+                            <button type="button" class="btn btn-secondary dropdown-toggle mr-3" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Способ доставки
+                            </button>
+                            <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item">Самовывоз</a>
+                                <a class="dropdown-item">Доставка почтой</a>
+                                <a class="dropdown-item">Доставка курьером</a>
+                            </div>
+
+                        </li>
+                        <li class="list-group-item">
+                            <h6>Итоговая стоимость</h6>
+                            {{ summary_price }}
+                        </li>
+                        <li class="list-group-item">
+                            <input type="submit" value="Купить" class="btn btn-dark btn-block mt-1" name="buy">
+
+                        </li>
+                        <li class="list-group-item">
+                            <input type="submit" value="Очистить корзину" class="btn btn-dark btn-block mt-1" name="clear">
+                        </li>
+                    </ul>
+                </form>
+
             </div>
 
         </div>
@@ -58,7 +86,6 @@
                                 </div>
                                 <div class="card-footer">
                                     <small class="text-muted">₴ {{item.price}}</small>
-                                    <!--                            #todo button: buy-->
                                 </div>
                             </div>
                         </div>
@@ -71,7 +98,7 @@
 
                 {% else %}
 
-                    <p>По заданным параметрам результатов нет :( </p>
+                    <p>Корзина пока пуста :( </p>
 
                 {% endif %}
 
