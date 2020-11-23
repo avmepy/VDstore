@@ -51,7 +51,7 @@
                     </button>
                     <div class="dropdown-menu dropdown-menu-lg-right" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{% url 'profile_detail_url' %}">Профиль</a>
-                        <a class="dropdown-item" href="#">Корзина</a>
+                        <a class="dropdown-item" href="{% url 'store:my_cart' %}">Корзина</a>
                         <div class="dropdown-divider"></div>
                         <a class="dropdown-item" href="{% url 'profile_edit_url' %}">Изменить профиль</a>
                         <a class="dropdown-item" href="{% url 'profile_change_password_url' %}">Изменить пароль</a>

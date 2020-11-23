@@ -36,7 +36,7 @@
                         <h4>₴ {{ product.price }}</h4>
                         <p class="card-text"> {{ product.description }}</p>
 {#                        <button class="btn btn-dark"> Добавить в корзину</button>#}
-                        <form method="post" action="{% url 'store:add_to_cart' product.slug product.id %}">
+                        <form method="post" action="{% url 'store:add_to_cart' product.slug %}">
 
                             {% csrf_token %}
 
