@@ -26,6 +26,8 @@ class Product(models.Model):
             self.slug = generate_slug(self.title)
         super().save(*args, **kwargs)
 
+    def
+
 
 class SmartPhone(Product):
 
@@ -43,6 +45,21 @@ class SmartPhone(Product):
     ssd = models.IntegerField(verbose_name="Встроенная память")
     system = models.CharField(verbose_name="Платформа", max_length=50)
 
+    def get_characteristics(self):
+        characteristics = {
+            'water_resist': self.water_resist,
+            'weight': self.weight,
+            'color': self.color,
+            'display_type': self.display_type,
+            'display_diagonal': self.display_diagonal,
+            'main_camera': self.main_camera,
+            'front_camera': self.front_camera,
+            'cpu': self.cpu,
+            'ram': self.ram,
+            'ssd': self.ssd,
+            'system': self.system
+        }
+        return characteristics
 
 class Laptop(Product):
 

@@ -40,9 +40,10 @@ def home(request):
 
 def product_detail(request, slug):
     product = get_object_or_404(Product, slug=slug)
-
+    print(product.get_cha)
     context = {
         'product': product,
+        'product_model': product.__class__._meta.model_name
     }
 
     return render(request, 'store/product_detail.html', context=context)

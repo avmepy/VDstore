@@ -34,6 +34,13 @@
                     <div class="card-body">
                         <h3 class="card-title">{{ product.title }}</h3>
                         <h4>₴ {{ product.price }}</h4>
+
+                        {% if product_model == 'audio' %}
+                            {% include 'store/audio_detail_table.html' %}
+
+                        {% endif %}
+
+
                         <p class="card-text"> {{ product.description }}</p>
                         <button class="btn btn-dark"> Добавить в корзину</button>
                     </div>
