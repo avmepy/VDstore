@@ -124,8 +124,21 @@ class ShowCategory(View):
 def add_to_cart(request, slug, product_id):
     if request.method == "POST":
         print("added")
-        item = SmartPhone.objects.get(id=product_id)
+
+        sub_classes = [SmartPhone, SmartWatch, Tablet, Computer, Audio, Laptop, Product]
+
+        item = None
+
+
+        for sub_class in sub_classes:
+            try:
+                item = sub_class.objects.get(id=product_id)
+
+                break
+            except:
+                continue
         print(item)
+        print(type(item))
 
         return product_detail(request, slug)
 
