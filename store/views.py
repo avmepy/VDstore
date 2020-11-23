@@ -141,7 +141,6 @@ def add_to_cart(request, slug):
 
 @login_required
 def my_cart(request):
-
     user = request.user
     cur_cart = None
     try:
