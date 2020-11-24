@@ -2,6 +2,7 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from django.views.generic import View
 from .models import SmartPhone, Sale, SmartWatch, Tablet, Computer, Audio, Laptop, Product, Cart, User, Profile, Comment
+
 import random
 
 
@@ -39,6 +40,7 @@ def home(request):
     return render(request, "store/home.html", context=context)
 
 
+
 def product_detail(request, product_id):
 
     sub_classes = [SmartPhone, SmartWatch, Tablet, Computer, Audio, Laptop, Product]
@@ -61,6 +63,7 @@ def product_detail(request, product_id):
     }
 
     return render(request, 'store/product_detail.html', context=context)
+
 
 class ShowCategory(View):
 
@@ -136,18 +139,18 @@ class ShowCategory(View):
 
 
 @login_required
-def add_to_cart(request, slug):
+def add_to_cart(request, product_id):
     if request.method == "POST":
         user = request.user
 
-        item = get_object_or_404(Product, slug=slug)
+        item = get_object_or_404(Product, id=product_id)
         try:
             cur_cart = Cart.objects.get(user=Profile.objects.get(user=user))
         except:
             cur_cart = Cart(user=Profile.objects.get(user=user))
             cur_cart.save()
         cur_cart.products.add(item)
-        return product_detail(request, slug)
+        return product_detail(request, product_id)
 
     return HttpResponse("something went wrong :(")
 
