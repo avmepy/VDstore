@@ -34,8 +34,29 @@
                     <div class="card-body">
                         <h3 class="card-title">{{ product.title }}</h3>
                         <h4>₴ {{ product.price }}</h4>
-                        <p class="card-text"> {{ product.description }}</p>
+
                         <button class="btn btn-dark"> Добавить в корзину</button>
+                        <br> <br>
+                        <h5 class="ml-2">Характеристики</h5>
+
+                        {% if product_model == 'smartphone' %}
+                            {% include 'store/smartphone-detail-table.html' %}
+                        {% elif product_model == 'laptop' %}
+                            {% include 'store/laptop-detail-table.html' %}
+                        {% elif product_model == 'tablet' %}
+                            {% include 'store/tablet-detail-table.html' %}
+                        {% elif product_model == 'smartwatch' %}
+                            {% include 'store/smartwatch-detail-table.html' %}
+                        {% elif product_model == 'audio' %}
+                            {% include 'store/audio-detail-table.html' %}
+                        {% elif product_model == 'computer' %}
+                            {% include 'store/computer-detail-table.html' %}
+                        {% endif %}
+
+                        <h5 class="ml-2">Описание</h5>
+
+                        <p class="card-text"> {{ product.description }}</p>
+
                     </div>
                 </div>
                 <!-- /.card -->
@@ -45,16 +66,24 @@
                         Отзывы о товаре
                     </div>
                     <div class="card-body">
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                        <hr>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                        <hr>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
-                        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
-                        <hr>
-                        <a href="#" class="btn btn-success">Оставить отзыв</a>
+
+                        {% if not product_with_comments.comment_set.all %}
+                            <h6>Будьте первыми, кто оставит отзыв!</h6>
+                        {% endif %}
+                        <form action="{% url 'store:add_comment_url' product.id %}" method="post">
+                            {% csrf_token %}
+                            <div class="form-group">
+                                <textarea required="required" name="comment-text" class="form-control" rows="3"></textarea>
+                                <button type="submit" class="mt-1 btn btn-success">Оставить отзыв</button>
+                            </div>
+                        </form>
+
+                        {% for comment in product_with_comments.comment_set.all %}
+                            <p>{{ comment.text }}</p>
+                            <small class="text-muted">Опубликовано {{comment.author.username}} | {{comment.pub_date}}</small>
+                            <hr>
+                        {% endfor %}
+
                     </div>
                 </div>
                 <!-- /.card -->

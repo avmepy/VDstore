@@ -1,5 +1,5 @@
-from django.shortcuts import render, get_object_or_404, HttpResponse
-from .models import SmartPhone, Sale, SmartWatch, Tablet, Computer, Audio, Laptop, Product
+from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
+from .models import SmartPhone, Sale, SmartWatch, Tablet, Computer, Audio, Laptop, Product, Comment
 import random
 
 
@@ -34,11 +34,25 @@ def home(request):
     return render(request, "store/home.html", context=context)
 
 
-def product_detail(request, slug):
-    product = get_object_or_404(Product, slug=slug)
+def product_detail(request, product_id):
+
+    sub_classes = [SmartPhone, SmartWatch, Tablet, Computer, Audio, Laptop, Product]
+
+    product = None
+    product_with_comments = get_object_or_404(Product, id=product_id)
+
+    for sub_class in sub_classes:
+        try:
+            product = sub_class.objects.get(id=product_id)
+
+            break
+        except:
+            continue
 
     context = {
+        'product_with_comments': product_with_comments,
         'product': product,
+        'product_model': product.__class__._meta.model_name,
     }
 
     return render(request, 'store/product_detail.html', context=context)
@@ -57,6 +71,17 @@ def show_category(request, product):
     current = items[product]
 
     context = {'current': current}
-    # return HttpResponse(f"{list(current)}")
-    # kdslkj
     return render(request, 'store/category.html', context=context)
+
+
+def create_comment(request, product_id):
+    if request.method == 'POST':
+        product = get_object_or_404(Product, id=product_id)
+        new_comment = Comment.objects.create(
+            author=request.user,
+            product=product,
+            text=request.POST['comment-text']
+        )
+        new_comment.save()
+
+        return redirect('store:product_detail_url', product_id)

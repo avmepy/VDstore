@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 
@@ -13,6 +14,7 @@ class Product(models.Model):
     description = models.TextField(max_length=5000, null=True, verbose_name="Описание")
     image = models.ImageField(verbose_name="Изображение")
     price = models.IntegerField(verbose_name="Цена")
+
 
     def __str__(self):
         return self.title
@@ -121,3 +123,15 @@ class Sale(models.Model):
     title = models.CharField(max_length=150, verbose_name="Название")
     image = models.ImageField(verbose_name="Баннер")  # 900x350
 
+
+class Comment(models.Model):
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    text = models.TextField()
+    pub_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.text[:15]
+
+    class Meta:
+        ordering = ('-pub_date',)
