@@ -2,7 +2,6 @@ from django.contrib.auth.decorators import login_required
 from django.shortcuts import render, get_object_or_404, HttpResponse, redirect
 from django.views.generic import View
 from .models import SmartPhone, Sale, SmartWatch, Tablet, Computer, Audio, Laptop, Product, Cart, User, Profile, Comment
-
 import random
 
 
@@ -40,26 +39,11 @@ def home(request):
     return render(request, "store/home.html", context=context)
 
 
-
-def product_detail(request, product_id):
-
-    sub_classes = [SmartPhone, SmartWatch, Tablet, Computer, Audio, Laptop, Product]
-
-    product = None
-    product_with_comments = get_object_or_404(Product, id=product_id)
-
-    for sub_class in sub_classes:
-        try:
-            product = sub_class.objects.get(id=product_id)
-
-            break
-        except:
-            continue
-
+def product_detail(request, slug):
+    product = get_object_or_404(Product, slug=slug)
     context = {
-        'product_with_comments': product_with_comments,
         'product': product,
-        'product_model': product.__class__._meta.model_name,
+        # 'product_model': product_category
     }
 
     return render(request, 'store/product_detail.html', context=context)
@@ -139,18 +123,18 @@ class ShowCategory(View):
 
 
 @login_required
-def add_to_cart(request, product_id):
+def add_to_cart(request, slug):
     if request.method == "POST":
         user = request.user
 
-        item = get_object_or_404(Product, id=product_id)
+        item = get_object_or_404(Product, slug=slug)
         try:
             cur_cart = Cart.objects.get(user=Profile.objects.get(user=user))
         except:
             cur_cart = Cart(user=Profile.objects.get(user=user))
             cur_cart.save()
         cur_cart.products.add(item)
-        return product_detail(request, product_id)
+        return product_detail(request, slug)
 
     return HttpResponse("something went wrong :(")
 
@@ -182,6 +166,7 @@ def my_cart(request):
     return render(request, 'store/cart.html', context=context)
 
 
+
 def create_comment(request, product_id):
     if request.method == 'POST':
         product = get_object_or_404(Product, id=product_id)
@@ -193,3 +178,4 @@ def create_comment(request, product_id):
         new_comment.save()
 
         return redirect('store:product_detail_url', product_id)
+
