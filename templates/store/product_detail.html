@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'bases/base.html' %}
 
 {% block title %}
@@ -104,4 +105,90 @@
 
 
 
+=======
+{% extends 'bases/base.html' %}
+
+{% block title %}
+    {{ product.title }}
+{% endblock %}
+
+{% block content %}
+
+
+
+    <!-- Page Content -->
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-lg-3">
+                <h1 class="my-4">VD store</h1>
+                {#            <img src="{% static 'media/logo_name.png' %}" alt="logo" height="120" width="200">#}
+                <div class="list-group">
+                    <a href="{% url 'store:show_category' "smartphones" %}" class="list-group-item">Смартфоны</a>
+                    <a href="{% url 'store:show_category' "laptops" %}" class="list-group-item">Ноутбуки</a>
+                    <a href="{% url 'store:show_category' "computers" %}" class="list-group-item">Компьютеры</a>
+                    <a href="{% url 'store:show_category' "smartwatches" %}" class="list-group-item">Смарт часы</a>
+                    <a href="{% url 'store:show_category' "tablets" %}" class="list-group-item">Планшеты</a>
+                    <a href="{% url 'store:show_category' "audios" %}" class="list-group-item">Аудио</a>
+                </div>
+            </div>
+            <!-- /.col-lg-3 -->
+
+            <div class="col-lg-9">
+
+                <div class="card mt-4">
+                    <img class=" img-fluid" src="{{product.image.url}}" width="200" height="200" alt="">
+                    <div class="card-body">
+                        <h3 class="card-title">{{ product.title }}</h3>
+                        <h4>₴ {{ product.price }}</h4>
+
+                        {% if product_model == 'audio' %}
+                            {% include 'store/audio_detail_table.html' %}
+
+                        {% endif %}
+
+
+                        <p class="card-text"> {{ product.description }}</p>
+{#                        <button class="btn btn-dark"> Добавить в корзину</button>#}
+                        <form method="post" action="{% url 'store:add_to_cart' product.slug %}">
+
+                            {% csrf_token %}
+
+                            <input type="submit" value="Добавить в корзину" class="btn btn-dark">
+                        </form>>
+                    </div>
+                </div>
+                <!-- /.card -->
+
+                <div class="card card-outline-secondary my-4">
+                    <div class="card-header">
+                        Отзывы о товаре
+                    </div>
+                    <div class="card-body">
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                        <hr>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                        <hr>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Omnis et enim aperiam inventore, similique necessitatibus neque non! Doloribus, modi sapiente laboriosam aperiam fugiat laborum. Sequi mollitia, necessitatibus quae sint natus.</p>
+                        <small class="text-muted">Posted by Anonymous on 3/1/17</small>
+                        <hr>
+                        <a href="#" class="btn btn-success">Оставить отзыв</a>
+                    </div>
+                </div>
+                <!-- /.card -->
+
+            </div>
+            <!-- /.col-lg-9 -->
+
+        </div>
+
+    </div>
+    <!-- /.container -->
+
+
+
+>>>>>>> parent of 16678ad... conflicts fixed
 {% endblock %}
