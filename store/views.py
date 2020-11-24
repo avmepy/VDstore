@@ -182,7 +182,6 @@ def my_cart(request):
     return render(request, 'store/cart.html', context=context)
 
 
-
 def create_comment(request, product_id):
     if request.method == 'POST':
         product = get_object_or_404(Product, id=product_id)
