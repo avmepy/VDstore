@@ -180,7 +180,10 @@ def my_cart(request):
     }
 
     return render(request, 'store/cart.html', context=context)
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
 
 
 def create_comment(request, product_id):
@@ -194,4 +197,7 @@ def create_comment(request, product_id):
         new_comment.save()
 
         return redirect('store:product_detail_url', product_id)
+<<<<<<< HEAD
 
+=======
+>>>>>>> dev
