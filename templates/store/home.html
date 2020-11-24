@@ -85,10 +85,10 @@
 
                 <div class="col-lg-4 col-md-6 mb-4">
                     <div class="card h-100">
-                        <a href="{% url 'store:product_detail_url' current.slug %}"><img class="card-img-top" src="{{current.image.url}}" width="250" height="200" alt=""></a>
+                        <a href="{% url 'store:product_detail_url' current.id %}"><img class="card-img-top" src="{{current.image.url}}" width="250" height="200" alt=""></a>
                         <div class="card-body">
                             <h4 class="card-title">
-                                <a href="{% url 'store:product_detail_url' current.slug %}">{{current.title}}</a>
+                                <a href="{% url 'store:product_detail_url' current.id %}">{{current.title}}</a>
                             </h4>
                             <p class="card-text">{{current.color}}</p>
                         </div>
