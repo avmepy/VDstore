@@ -1,3 +1,4 @@
+from django.contrib.auth.models import User
 from django.db import models
 from django.urls import reverse
 from .utils import generate_slug
@@ -18,11 +19,12 @@ class Product(models.Model):
     price = models.IntegerField(verbose_name="Цена")
     brand = models.CharField(verbose_name="Бренд", max_length=150)
 
+
     def __str__(self):
         return self.title
 
     def get_absolute_url(self):
-        return reverse('product_detail', kwargs={'slug': self.slug})
+        return reverse('product_detail', kwargs={'product_id': self.id})
 
     def save(self, *args, **kwargs):
         if not self.id:
@@ -167,3 +169,17 @@ class Cart(models.Model):
 
     user = models.ForeignKey(Profile, on_delete=models.CASCADE)
     products = models.ManyToManyField(Product)
+
+
+class Comment(models.Model):
+
+    author = models.ForeignKey(User, on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, on_delete=models.CASCADE)
+    text = models.TextField()
+    pub_date = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.text[:15]
+
+    class Meta:
+        ordering = ('-pub_date',)

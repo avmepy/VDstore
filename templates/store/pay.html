@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends "../bases/base.html" %}
 
 {% block title %} Home  {% endblock %}
@@ -89,3 +90,96 @@
 
 
 {% endblock %}
+=======
+{% extends "../bases/base.html" %}
+
+{% block title %} Home  {% endblock %}
+
+{% block content %}
+
+{% load static %}
+
+<!-- Page Content -->
+<div class="container">
+
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+<script src="//netdna.bootstrapcdn.com/bootstrap/3.0.0/js/bootstrap.min.js"></script>
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+<!------ Include the above in your HEAD tag ---------->
+
+    <style>
+        body { margin-top:20px; }
+        .panel-title {display: inline;font-weight: bold;}
+        .checkbox.pull-right { margin: 0; }
+        .pl-ziro { padding-left: 0px; }
+
+    </style>
+
+<div class="container">
+    <div class="row">
+        <div class="col-xs-12 col-md-4">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h3 class="panel-title">
+                        Детали платежа
+                    </h3>
+                    <div class="checkbox pull-right">
+                        <label>
+                            <input type="checkbox" />
+                            Запомнить
+                        </label>
+                    </div>
+                </div>
+                <div class="panel-body">
+                    <form role="form">
+                    <div class="form-group">
+                        <label for="cardNumber">
+                            Номер карты</label>
+                        <div class="input-group">
+                            <input type="text" class="form-control" id="cardNumber" placeholder="16-значный номер"
+                                required autofocus />
+                            <span class="input-group-addon"><span class="glyphicon glyphicon-lock"></span></span>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-7 col-md-7">
+                            <div class="form-group">
+                                <label for="expityMonth">
+                                    Срок годности</label>
+                                <div class="col-xs-6 col-lg-6 pl-ziro">
+                                    <input type="text" class="form-control" id="expityMonth" placeholder="MM" required />
+                                </div>
+                                <div class="col-xs-6 col-lg-6 pl-ziro">
+                                    <input type="text" class="form-control" id="expityYear" placeholder="YY" required /></div>
+                            </div>
+                        </div>
+                        <div class="col-xs-5 col-md-5 pull-right">
+                            <div class="form-group">
+                                <label for="cvCode">
+                                    cvv код</label>
+                                <input type="password" class="form-control" id="cvCode" placeholder="cvv" required />
+                            </div>
+                        </div>
+                    </div>
+                    </form>
+                </div>
+            </div>
+            <ul class="nav nav-pills nav-stacked">
+                <li class="active"><a href="#"><span class="badge pull-right"><span></span>{{ price }}</span> Итоговая стоимость</a>
+                </li>
+            </ul>
+            <br/>
+            <a href="" class="btn btn-success btn-lg btn-block" role="button">Оплатить</a>
+        </div>
+    </div>
+</div>
+
+
+
+
+</div>
+<!-- /.container -->
+
+
+{% endblock %}
+>>>>>>> 7ffec761a7f023462ff2485bf87b8d1b312e6502
