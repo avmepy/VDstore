@@ -178,4 +178,3 @@ def create_comment(request, product_id):
         new_comment.save()
 
         return redirect('store:product_detail_url', product_id)
-
