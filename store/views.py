@@ -39,15 +39,28 @@ def home(request):
     return render(request, "store/home.html", context=context)
 
 
-def product_detail(request, slug):
-    product = get_object_or_404(Product, slug=slug)
+def product_detail(request, product_id):
+
+    sub_classes = [SmartPhone, SmartWatch, Tablet, Computer, Audio, Laptop, Product]
+
+    product = None
+    product_with_comments = get_object_or_404(Product, id=product_id)
+
+    for sub_class in sub_classes:
+        try:
+            product = sub_class.objects.get(id=product_id)
+
+            break
+        except:
+            continue
+
     context = {
+        'product_with_comments': product_with_comments,
         'product': product,
-        # 'product_model': product_category
+        'product_model': product.__class__._meta.model_name,
     }
 
     return render(request, 'store/product_detail.html', context=context)
-
 
 class ShowCategory(View):
 
@@ -164,7 +177,6 @@ def my_cart(request):
     }
 
     return render(request, 'store/cart.html', context=context)
-
 
 
 def create_comment(request, product_id):
